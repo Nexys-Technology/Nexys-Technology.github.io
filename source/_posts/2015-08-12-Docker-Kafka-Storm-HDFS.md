@@ -4,6 +4,7 @@ title: Docker, Kafka, Storm et Hadoop HDFS 1
 description: "Création d'un environnement Kafka, Storm & Hadoop avec Docker 1: Préparation de l'environnement"
 modified: 2015-08-12
 categories: [hadoop, docker, kafka, storm]
+comments: true
 ---
 
 
