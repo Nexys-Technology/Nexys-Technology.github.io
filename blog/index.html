@@ -204,10 +204,11 @@ Nous utiliserons la version 1.8 de docker avec graylog 2 pour la centralisation 
 
 <h2 id="cration-du-container-graylog-pour-centraliser-les-logs">Création du container Graylog pour centraliser les logs</h2>
 
-<p>Nous allons utiliser Graylog 2 pour centraliser les logs des difféerents containers:</p>
+<p>Nous allons utiliser Graylog 2 pour centraliser les logs des difféerents containers.
+Utilisons le container standard pour déployer un système Graylog 2 complet:</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line">docker run -t -p 19000:9000 -p 12201:12201 graylog2/allinone
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>docker run -t -p 19000:9000 -p 12201:12201 graylog2/allinone
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
