@@ -1,136 +1,69 @@
 ---
 layout: post
-title: Docker, Kafka, Storm et Hadoop HDFS
-description: "Création d'un environnement Kafka, Storm & Hadoop avec Docker"
+title: Docker, Kafka, Storm et Hadoop HDFS 1
+description: "Création d'un environnement Kafka, Storm & Hadoop avec Docker 1: Préparation de l'environnement"
 modified: 2015-08-12
 categories: [hadoop, docker, kafka, storm]
 ---
 
 
-Installation d'un environnement sous Docker de Kafka, Storm & Hadoop. Le but est d'avoir un environnement fonctionnel et simple permettant le déploiement de traitements Storm.
+Le but de cete suite de posts est de décrire l'installation d'un environnement fonctionnel de Kafka, Storm & Hadoop avec docker.
+Nous utiliserons la version 1.8 de docker avec graylog 2 pour la centralisation des logs entre les containers
 
 
 ## Initialisation de l'environnement Docker
 
 - Télécharger DockerToolbox: [DockerToolbox](https://www.docker.com/toolbox)
+- Installer l'application en executer le programme d'installation
+- Lancer le shell Docker Quickstart Terminal ou dans le cas d'un shell existant
+- ou lancer la commande suivante dans un shell existant pour initialiser les variables d'nevironnements docker: `eval $(docker-machine env default --shell=zsh)` (changer le zsh en bash en fonction de votre shell)
+  
+Vérifier que docker fonctionne correctement:
 
-Syntax highlighting is a feature that displays source code, in different colors and fonts according to the category of terms. This feature facilitates writing in a structured language such as a programming language or a markup language as both structures and syntax errors are visually distinct. Highlighting does not affect the meaning of the text itself; it is intended only for human readers.[^1]
+``` bash
+$ docker version
+Client:
+ Version:      1.8.0
+ API version:  1.20
+ Go version:   go1.4.2
+ Git commit:   0d03096
+ Built:        Tue Aug 11 17:17:40 UTC 2015
+ OS/Arch:      darwin/amd64
 
-[^1]: <http://en.wikipedia.org/wiki/Syntax_highlighting>
+Server:
+ Version:      1.8.0
+ API version:  1.20
+ Go version:   go1.4.2
+ Git commit:   0d03096
+ Built:        Tue Aug 11 17:17:40 UTC 2015
+ OS/Arch:      linux/amd64
 
-### Pygments Code Blocks
-
-``` css
-#container {
-    float: left;
-    margin: 0 -240px 0 0;
-    width: 100%;
-}
 ```
 
-To modify styling and highlight colors edit `/_sass/_pygments.scss`.
+## Création d'un machine virtuel avec docker-machine
 
-{% highlight css %}
-#container {
-    float: left;
-    margin: 0 -240px 0 0;
-    width: 100%;
-}
-{% endhighlight %}
+Nous allons récréer la VM default avece 4G de Ram et 60Gb de disque:
 
-{% highlight html %}
-{% raw %}
-<nav class="pagination" role="navigation">
-    {% if page.previous %}
-        <a href="{{ site.url }}{{ page.previous.url }}" class="btn" title="{{ page.previous.title }}">Previous article</a>
-    {% endif %}
-    {% if page.next %}
-        <a href="{{ site.url }}{{ page.next.url }}" class="btn" title="{{ page.next.title }}">Next article</a>
-    {% endif %}
-</nav><!-- /.pagination -->
-{% endraw %}
-{% endhighlight %}
+``` bash
+$ docker-machine stop default
+$ docker-machine rm default
+$ docker-machine create -d virtualbox --virtualbox-memory 4096 --virtualbox-disk-size 60000 default
+$ eval $($DOCKER_MACHINE env default --shell=zsh)
+$ docker-machine ls
+NAME      ACTIVE   DRIVER       STATE     URL                         SWARM
+default   *        virtualbox   Running   tcp://192.168.99.101:2376
+$
+```
 
-{% highlight ruby %}
-module Jekyll
-  class TagIndex < Page
-    def initialize(site, base, dir, tag)
-      @site = site
-      @base = base
-      @dir = dir
-      @name = 'index.html'
-      self.process(@name)
-      self.read_yaml(File.join(base, '_layouts'), 'tag_index.html')
-      self.data['tag'] = tag
-      tag_title_prefix = site.config['tag_title_prefix'] || 'Tagged: '
-      tag_title_suffix = site.config['tag_title_suffix'] || '&#8211;'
-      self.data['title'] = "#{tag_title_prefix}#{tag}"
-      self.data['description'] = "An archive of posts tagged #{tag}."
-    end
-  end
-end
-{% endhighlight %}
+## Création du container Graylog pour centraliser les logs
+
+Nous allons utiliser Graylog 2 pour centraliser les logs des difféerents containers:
+
+```bash
+docker run -t -p 19000:9000 -p 12201:12201 graylog2/allinone
+```
 
 
-### Standard Code Block
-
-    {% raw %}
-    <nav class="pagination" role="navigation">
-        {% if page.previous %}
-            <a href="{{ site.url }}{{ page.previous.url }}" class="btn" title="{{ page.previous.title }}">Previous article</a>
-        {% endif %}
-        {% if page.next %}
-            <a href="{{ site.url }}{{ page.next.url }}" class="btn" title="{{ page.next.title }}">Next article</a>
-        {% endif %}
-    </nav><!-- /.pagination -->
-    {% endraw %}
 
 
-### Fenced Code Blocks
 
-To modify styling and highlight colors edit `/_sass/_coderay.scss`. Line numbers and a few other things can be modified in `_config.yml`. Consult [Jekyll's documentation](http://jekyllrb.com/docs/configuration/) for more information.
-
-~~~ css
-#container {
-    float: left;
-    margin: 0 -240px 0 0;
-    width: 100%;
-}
-~~~
-
-~~~ html
-{% raw %}<nav class="pagination" role="navigation">
-    {% if page.previous %}
-        <a href="{{ site.url }}{{ page.previous.url }}" class="btn" title="{{ page.previous.title }}">Previous article</a>
-    {% endif %}
-    {% if page.next %}
-        <a href="{{ site.url }}{{ page.next.url }}" class="btn" title="{{ page.next.title }}">Next article</a>
-    {% endif %}
-</nav><!-- /.pagination -->{% endraw %}
-~~~
-
-~~~ ruby
-module Jekyll
-  class TagIndex < Page
-    def initialize(site, base, dir, tag)
-      @site = site
-      @base = base
-      @dir = dir
-      @name = 'index.html'
-      self.process(@name)
-      self.read_yaml(File.join(base, '_layouts'), 'tag_index.html')
-      self.data['tag'] = tag
-      tag_title_prefix = site.config['tag_title_prefix'] || 'Tagged: '
-      tag_title_suffix = site.config['tag_title_suffix'] || '&#8211;'
-      self.data['title'] = "#{tag_title_prefix}#{tag}"
-      self.data['description'] = "An archive of posts tagged #{tag}."
-    end
-  end
-end
-~~~
-
-### GitHub Gist Embed
-
-An example of a Gist embed below.
-
-{% gist mmistakes/6589546 %}
