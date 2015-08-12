@@ -3,18 +3,30 @@ layout: post
 title: Docker, Kafka, Storm et Hadoop HDFS
 description: "Création d'un environnement Kafka, Storm & Hadoop avec Docker"
 modified: 2015-08-12
-tags: [hadoop, docker, kafka, storm]
-image:
-  feature: abstract-10.jpg
-  credit: dargadgetz
-  creditlink: http://www.dargadgetz.com/ios-7-abstract-wallpaper-pack-for-iphone-5-and-ipod-touch-retina/
+categories: [hadoop, docker, kafka, storm]
 ---
+
+
+Installation d'un environnement sous Docker de Kafka, Storm & Hadoop. Le but est d'avoir un environnement fonctionnel et simple permettant le déploiement de traitements Storm.
+
+
+## Initialisation de l'environnement Docker
+
+- Télécharger DockerToolbox: [DockerToolbox](https://www.docker.com/toolbox)
 
 Syntax highlighting is a feature that displays source code, in different colors and fonts according to the category of terms. This feature facilitates writing in a structured language such as a programming language or a markup language as both structures and syntax errors are visually distinct. Highlighting does not affect the meaning of the text itself; it is intended only for human readers.[^1]
 
 [^1]: <http://en.wikipedia.org/wiki/Syntax_highlighting>
 
 ### Pygments Code Blocks
+
+``` css
+#container {
+    float: left;
+    margin: 0 -240px 0 0;
+    width: 100%;
+}
+```
 
 To modify styling and highlight colors edit `/_sass/_pygments.scss`.
 
