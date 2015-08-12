@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[My Octopress Blog]]></title>
-  <link href="http://yoursite.com/atom.xml" rel="self"/>
-  <link href="http://yoursite.com/"/>
-  <updated>2015-08-12T08:50:50+02:00</updated>
-  <id>http://yoursite.com/</id>
+  <title><![CDATA[Nexys Technology]]></title>
+  <link href="http://nexys-technology.github.io/atom.xml" rel="self"/>
+  <link href="http://nexys-technology.github.io/"/>
+  <updated>2015-08-12T09:08:31+02:00</updated>
+  <id>http://nexys-technology.github.io/</id>
   <author>
-    <name><![CDATA[Your Name]]></name>
+    <name><![CDATA[Stéphane NOUHAUD]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
