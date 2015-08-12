@@ -2,10 +2,10 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: http://yoursite.com
-title: My Octopress Blog
+url: http://nexys-technology.github.io
+title: Nexys Technology
 subtitle: A blogging framework for hackers.
-author: Your Name
+author: Stéphane NOUHAUD
 simple_search: https://www.google.com/search
 description:
 
