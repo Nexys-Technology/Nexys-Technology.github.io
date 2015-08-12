@@ -117,6 +117,10 @@
 
 
             
+                <a class="pull-right" href="#disqus_thread">
+                    Comments <i class="fa fa-comment"></i>
+                </a>
+            
         </div>
     
 </header>
@@ -208,6 +212,12 @@ Nous utiliserons la version 1.8 de docker avec graylog 2 pour la centralisation 
 </article>
 
 
+<section id="disqus">
+    <h1 class="disqus__title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+
 
                 </div>
 
@@ -285,7 +295,10 @@ Nous utiliserons la version 1.8 de docker avec graylog 2 pour la centralisation 
     var disqus_shortname = 'nexystechnology';
     
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://nexys-technology.github.io/hadoop/docker/kafka/storm/Docker-Kafka-Storm-HDFS/';
+        var disqus_url = 'http://nexys-technology.github.io/hadoop/docker/kafka/storm/Docker-Kafka-Storm-HDFS/';
+        var disqus_script = 'embed.js';
     
     (function () {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
