@@ -58,12 +58,25 @@ $
 
 ## Création du container Graylog pour centraliser les logs
 
-Nous allons utiliser Graylog 2 pour centraliser les logs des difféerents containers:
+Nous allons utiliser Graylog 2 pour centraliser les logs des difféerents containers.
+Utilisons le container standard pour déployer un système Graylog 2 complet:
 
-```bash
-docker run -t -p 19000:9000 -p 12201:12201 graylog2/allinone
+``` bash
+$ docker run -t -p 19000:9000 -p 12201:12201/udp graylog2/allinone
 ```
 
+Se connecter à l'interface GrayLog 2: `open http://$(docker-machine ip default):19000`
+
+Aller dnas le menu  System/input et créer un input de type GELF UDP donner lui un nom (ex: Docker Log). Ensuite essayons un container avec la reidrection des lofs vers GrayLog:
+
+```bash
+docker run --log-driver=gelf --log-opt gelf-address=udp://$(docker-machine ip default):12201 busybox echo Hello Graylog
+```
+
+Vour devriez avoir un nouveau message dans GrayLog:
+
+![GrayLog Message]({{ site.url }}/images/messages.png)
+{: .image-left}
 
 
 
