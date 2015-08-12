@@ -204,8 +204,20 @@ Nous utiliserons la version 1.8 de docker avec graylog 2 pour la centralisation 
 Utilisons le container standard pour déployer un système Graylog 2 complet:</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>docker run -t -p 19000:9000 -p 12201:12201 graylog2/allinone
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>docker run -t -p 19000:9000 -p 12201:12201/udp graylog2/allinone
 </span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Se connecter à l’interface GrayLog 2: <code>open http://$(docker-machine ip default):19000</code></p>
+
+<p>Aller dnas le menu  System/input et créer un input de type GELF UDP donner lui un nom (ex: Docker Log). Ensuite essayons un container avec la reidrection des lofs vers GrayLog:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">docker run --log-driver<span class="o">=</span>gelf --log-opt gelf-address<span class="o">=</span>udp://<span class="k">$(</span>docker-machine ip default<span class="k">)</span>:12201 busybox <span class="nb">echo </span>Hello Graylog
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Vour devriez avoir un nouveau message dans GrayLog:</p>
+
+<p class="image-left"><img src="http://nexys-technology.github.io/images/messages.png" alt="GrayLog Message" /></p>
 
 
 
