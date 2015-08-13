@@ -15,7 +15,7 @@
         <meta name="description" content="Création d'un environnement Kafka, Storm & Hadoop avec Docker 1: Préparation de l'environnement">
         
         <meta name="viewport" content="width=device-width">
-        <link rel="canonical" href="http://nexys-technology.github.io/hadoop/docker/kafka/storm/Docker-Kafka-Storm-HDFS">
+        <link rel="canonical" href="http://nexys-technology.github.io/posts/Docker-Kafka-Storm-HDFS-1">
 
         <link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,400italic' rel='stylesheet' type='text/css'>
         <link href="http://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet" type="text/css">
@@ -118,7 +118,7 @@
 
             
                 <a class="pull-right" href="#disqus_thread">
-                    Comments <i class="fa fa-comment"></i>
+                    Commentaires <i class="fa fa-comment"></i>
                 </a>
             
         </div>
@@ -128,8 +128,13 @@
 
 
 
-    <p>Le but de cete suite de posts est de décrire l’installation d’un environnement fonctionnel de Kafka, Storm &amp; Hadoop avec docker.
-Nous utiliserons la version 1.8 de docker avec graylog 2 pour la centralisation des logs entre les containers</p>
+    <p>Le but de cette suite de posts est de décrire l’installation d’un environnement fonctionnel
+ de Kafka, Storm &amp; Hadoop avec docker.
+Nous utiliserons la version 1.8 de docker avec graylog 2 pour la centralisation des logs entre les containers.
+Après l’installation de cette environnement nous déployeront un traitement storm pour consommer 
+des messages Kafka et les écrires dans des fichiers stockés sur le filesystem HDFS.</p>
+
+<!--more-->
 
 <h2 id="initialisation-de-lenvironnement-docker">Initialisation de l’environnement Docker</h2>
 
@@ -219,6 +224,8 @@ Utilisons le container standard pour déployer un système Graylog 2 complet:</p
 
 <p class="image-left"><img src="http://nexys-technology.github.io/images/messages.png" alt="GrayLog Message" /></p>
 
+<p>Voila pour cette première partie. Dans la suivante on verra comment déployer les containers Kafka, Storm et Hadoop</p>
+
 
 
 
@@ -248,7 +255,7 @@ Utilisons le container standard pour déployer un système Graylog 2 complet:</p
     <ul class="divided">
         
         <li class="post">
-            <a href="/hadoop/docker/kafka/storm/Docker-Kafka-Storm-HDFS/">Docker, Kafka, Storm et Hadoop HDFS 1</a>
+            <a href="/posts/Docker-Kafka-Storm-HDFS-1/">Docker, Kafka, Storm et Hadoop HDFS 1</a>
         </li>
         
     </ul>
@@ -309,8 +316,8 @@ Utilisons le container standard pour déployer un système Graylog 2 complet:</p
     
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://nexys-technology.github.io/hadoop/docker/kafka/storm/Docker-Kafka-Storm-HDFS/';
-        var disqus_url = 'http://nexys-technology.github.io/hadoop/docker/kafka/storm/Docker-Kafka-Storm-HDFS/';
+        var disqus_identifier = 'http://nexys-technology.github.io/posts/Docker-Kafka-Storm-HDFS-1/';
+        var disqus_url = 'http://nexys-technology.github.io/posts/Docker-Kafka-Storm-HDFS-1/';
         var disqus_script = 'embed.js';
     
     (function () {

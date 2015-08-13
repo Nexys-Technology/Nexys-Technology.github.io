@@ -4,7 +4,7 @@
     <title><![CDATA[Category: docker | Nexys Technology]]></title>
     <link href="http://nexys-technology.github.io/blog/categories/docker/atom.xml" rel="self"/>
     <link href="http://nexys-technology.github.io/"/>
-    <updated>2015-08-12T15:02:26+02:00</updated>
+    <updated>2015-08-13T08:51:07+02:00</updated>
     <id>http://nexys-technology.github.io/</id>
     <author>
         <name><![CDATA[Nexys Consulting]]></name>
@@ -15,11 +15,16 @@
     
     <entry>
         <title type="html"><![CDATA[Docker, Kafka, Storm et Hadoop HDFS 1]]></title>
-        <link href="http://nexys-technology.github.io/hadoop/docker/kafka/storm/Docker-Kafka-Storm-HDFS/"/>
+        <link href="http://nexys-technology.github.io/posts/Docker-Kafka-Storm-HDFS-1/"/>
         <updated>2015-08-12T00:00:00+02:00</updated>
-        <id>http://nexys-technology.github.io/hadoop/docker/kafka/storm/Docker-Kafka-Storm-HDFS</id>
-        <content type="html"><![CDATA[<p>Le but de cete suite de posts est de décrire l’installation d’un environnement fonctionnel de Kafka, Storm &amp; Hadoop avec docker.
-Nous utiliserons la version 1.8 de docker avec graylog 2 pour la centralisation des logs entre les containers</p>
+        <id>http://nexys-technology.github.io/posts/Docker-Kafka-Storm-HDFS-1</id>
+        <content type="html"><![CDATA[<p>Le but de cette suite de posts est de décrire l’installation d’un environnement fonctionnel
+ de Kafka, Storm &amp; Hadoop avec docker.
+Nous utiliserons la version 1.8 de docker avec graylog 2 pour la centralisation des logs entre les containers.
+Après l’installation de cette environnement nous déployeront un traitement storm pour consommer 
+des messages Kafka et les écrires dans des fichiers stockés sur le filesystem HDFS.</p>
+
+<!--more-->
 
 <h2 id="initialisation-de-lenvironnement-docker">Initialisation de l’environnement Docker</h2>
 
@@ -87,6 +92,8 @@ docker run --log-driver=gelf --log-opt gelf-address=udp://$(docker-machine ip de
 <p>Vour devriez avoir un nouveau message dans GrayLog:</p>
 
 <p class="image-left"><img src="http://nexys-technology.github.io/images/messages.png" alt="GrayLog Message" /></p>
+
+<p>Voila pour cette première partie. Dans la suivante on verra comment déployer les containers Kafka, Storm et Hadoop</p>
 
 ]]></content>
     </entry>

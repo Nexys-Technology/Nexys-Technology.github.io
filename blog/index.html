@@ -82,7 +82,7 @@
             <header class="article__header">
     
         <h1 class="h2 article__title">
-            <a href="/hadoop/docker/kafka/storm/Docker-Kafka-Storm-HDFS/">Docker, Kafka, Storm et Hadoop HDFS 1</a>
+            <a href="/posts/Docker-Kafka-Storm-HDFS-1/">Docker, Kafka, Storm et Hadoop HDFS 1</a>
         </h1>
     
 
@@ -121,8 +121,8 @@
 
 
             
-                <a class="pull-right" href="http://nexys-technology.github.io/hadoop/docker/kafka/storm/Docker-Kafka-Storm-HDFS/#disqus_thread">
-                    Comments <i class="fa fa-comment"></i>
+                <a class="pull-right" href="http://nexys-technology.github.io/posts/Docker-Kafka-Storm-HDFS-1/#disqus_thread">
+                    Commentaires <i class="fa fa-comment"></i>
                 </a>
             
         </div>
@@ -132,98 +132,16 @@
 
 
 
-    <p>Le but de cete suite de posts est de décrire l’installation d’un environnement fonctionnel de Kafka, Storm &amp; Hadoop avec docker.
-Nous utiliserons la version 1.8 de docker avec graylog 2 pour la centralisation des logs entre les containers</p>
-
-<h2 id="initialisation-de-lenvironnement-docker">Initialisation de l’environnement Docker</h2>
-
-<ul>
-  <li>Télécharger DockerToolbox: <a href="https://www.docker.com/toolbox">DockerToolbox</a></li>
-  <li>Installer l’application en executer le programme d’installation</li>
-  <li>Lancer le shell Docker Quickstart Terminal ou dans le cas d’un shell existant</li>
-  <li>ou lancer la commande suivante dans un shell existant pour initialiser les variables d’nevironnements docker: <code>eval $(docker-machine env default --shell=zsh)</code> (changer le zsh en bash en fonction de votre shell)</li>
-</ul>
-
-<p>Vérifier que docker fonctionne correctement:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>docker version
-</span><span class="line">Client:
-</span><span class="line"> Version:      1.8.0
-</span><span class="line"> API version:  1.20
-</span><span class="line"> Go version:   go1.4.2
-</span><span class="line"> Git commit:   0d03096
-</span><span class="line"> Built:        Tue Aug <span class="m">11</span> 17:17:40 UTC 2015
-</span><span class="line"> OS/Arch:      darwin/amd64
-</span><span class="line">
-</span><span class="line">Server:
-</span><span class="line"> Version:      1.8.0
-</span><span class="line"> API version:  1.20
-</span><span class="line"> Go version:   go1.4.2
-</span><span class="line"> Git commit:   0d03096
-</span><span class="line"> Built:        Tue Aug <span class="m">11</span> 17:17:40 UTC 2015
-</span><span class="line"> OS/Arch:      linux/amd64
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<h2 id="cration-dun-machine-virtuel-avec-docker-machine">Création d’un machine virtuel avec docker-machine</h2>
-
-<p>Nous allons récréer la VM default avece 4G de Ram et 60Gb de disque:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>docker-machine stop default
-</span><span class="line"><span class="nv">$ </span>docker-machine rm default
-</span><span class="line"><span class="nv">$ </span>docker-machine create -d virtualbox --virtualbox-memory <span class="m">4096</span> --virtualbox-disk-size <span class="m">60000</span> default
-</span><span class="line"><span class="nv">$ </span><span class="nb">eval</span> <span class="k">$(</span><span class="nv">$DOCKER_MACHINE</span> env default --shell<span class="o">=</span>zsh<span class="k">)</span>
-</span><span class="line"><span class="nv">$ </span>docker-machine ls
-</span><span class="line">NAME      ACTIVE   DRIVER       STATE     URL                         SWARM
-</span><span class="line">default   *        virtualbox   Running   tcp://192.168.99.101:2376
-</span><span class="line"><span class="err">$</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<h2 id="cration-du-container-graylog-pour-centraliser-les-logs">Création du container Graylog pour centraliser les logs</h2>
-
-<p>Nous allons utiliser Graylog 2 pour centraliser les logs des difféerents containers.
-Utilisons le container standard pour déployer un système Graylog 2 complet:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>docker run -t -p 19000:9000 -p 12201:12201/udp graylog2/allinone
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Se connecter à l’interface GrayLog 2: <code>open http://$(docker-machine ip default):19000</code></p>
-
-<p>Aller dnas le menu  System/input et créer un input de type GELF UDP donner lui un nom (ex: Docker Log). Ensuite essayons un container avec la reidrection des lofs vers GrayLog:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line">docker run --log-driver<span class="o">=</span>gelf --log-opt gelf-address<span class="o">=</span>udp://<span class="k">$(</span>docker-machine ip default<span class="k">)</span>:12201 busybox <span class="nb">echo </span>Hello Graylog
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Vour devriez avoir un nouveau message dans GrayLog:</p>
-
-<p class="image-left"><img src="http://nexys-technology.github.io/images/messages.png" alt="GrayLog Message" /></p>
+    <div class="article__content clearfix">
+        <p>Le but de cette suite de posts est de décrire l’installation d’un environnement fonctionnel
+ de Kafka, Storm &amp; Hadoop avec docker.
+Nous utiliserons la version 1.8 de docker avec graylog 2 pour la centralisation des logs entre les containers.
+Après l’installation de cette environnement nous déployeront un traitement storm pour consommer 
+des messages Kafka et les écrires dans des fichiers stockés sur le filesystem HDFS.</p>
 
 
+        <a class="btn pull-right" href="/posts/Docker-Kafka-Storm-HDFS-1/">Lire plus &rarr;</a>
+    </div>
 
 
         </article>
@@ -252,7 +170,7 @@ Utilisons le container standard pour déployer un système Graylog 2 complet:</p
     <ul class="divided">
         
         <li class="post">
-            <a href="/hadoop/docker/kafka/storm/Docker-Kafka-Storm-HDFS/">Docker, Kafka, Storm et Hadoop HDFS 1</a>
+            <a href="/posts/Docker-Kafka-Storm-HDFS-1/">Docker, Kafka, Storm et Hadoop HDFS 1</a>
         </li>
         
     </ul>
