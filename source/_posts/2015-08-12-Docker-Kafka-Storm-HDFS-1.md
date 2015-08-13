@@ -5,12 +5,17 @@ description: "Création d'un environnement Kafka, Storm & Hadoop avec Docker 1: 
 modified: 2015-08-12
 categories: [hadoop, docker, kafka, storm]
 comments: true
+lang: fr
 ---
 
 
-Le but de cete suite de posts est de décrire l'installation d'un environnement fonctionnel de Kafka, Storm & Hadoop avec docker.
-Nous utiliserons la version 1.8 de docker avec graylog 2 pour la centralisation des logs entre les containers
+Le but de cette suite de posts est de décrire l'installation d'un environnement fonctionnel
+ de Kafka, Storm & Hadoop avec docker.
+Nous utiliserons la version 1.8 de docker avec graylog 2 pour la centralisation des logs entre les containers.
+Après l'installation de cette environnement nous déployeront un traitement storm pour consommer 
+des messages Kafka et les écrires dans des fichiers stockés sur le filesystem HDFS.
 
+<!--more-->
 
 ## Initialisation de l'environnement Docker
 
@@ -78,6 +83,6 @@ Vour devriez avoir un nouveau message dans GrayLog:
 ![GrayLog Message]({{ site.url }}/images/messages.png)
 {: .image-left}
 
-
+Voila pour cette première partie. Dans la suivante on verra comment déployer les containers Kafka, Storm et Hadoop
 
 
