@@ -65,19 +65,19 @@ permalink: /posts/:title/
 # Amount of post to show on home page
 paginate: 5
 
-kramdown:
-  auto_ids: true
-  footnote_nr: 1
-  entity_output: as_char
-  toc_levels: 1..6
-  use_coderay: true
+#kramdown:
+#  auto_ids: true
+#  footnote_nr: 1
+#  entity_output: as_char
+#  toc_levels: 1..6
+#  use_coderay: true
 
-  coderay:
-    coderay_line_numbers: true
-    coderay_line_numbers_start: 1
-    coderay_tab_width: 4
-    coderay_bold_every: 10
-    coderay_css: class
+#  coderay:
+#    coderay_line_numbers: true
+#    coderay_line_numbers_start: 1
+#    coderay_tab_width: 4
+#    coderay_bold_every: 10
+#    coderay_css: class
 
 
 # list each of the sidebar modules you want to include, in the order you want them to appear.

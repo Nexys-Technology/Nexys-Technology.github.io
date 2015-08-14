@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Docker, Kafka, Storm et Hadoop HDFS 1
+title: Docker, Kafka, Storm et Hadoop HDFS 1er partie
 description: "Création d'un environnement Kafka, Storm & Hadoop avec Docker 1: Préparation de l'environnement"
 modified: 2015-08-12
 categories: [hadoop, docker, kafka, storm]
@@ -72,7 +72,7 @@ $ docker run -t -p 19000:9000 -p 12201:12201/udp graylog2/allinone
 
 Se connecter à l'interface GrayLog 2: `open http://$(docker-machine ip default):19000`
 
-Aller dnas le menu  System/input et créer un input de type GELF UDP donner lui un nom (ex: Docker Log). Ensuite essayons un container avec la reidrection des lofs vers GrayLog:
+Aller dnas le menu  System/input et créer un input de type GELF UDP donner lui un nom (ex: Docker Log). Ensuite essayons un container avec la redirection des logs vers GrayLog:
 
 ```bash
 docker run --log-driver=gelf --log-opt gelf-address=udp://$(docker-machine ip default):12201 busybox echo Hello Graylog
@@ -83,6 +83,6 @@ Vour devriez avoir un nouveau message dans GrayLog:
 ![GrayLog Message]({{ site.url }}/images/messages.png)
 {: .image-left}
 
-Voila pour cette première partie. Dans la suivante on verra comment déployer les containers Kafka, Storm et Hadoop
+Voila pour cette première partie. Dans la suivante nous verrons comment déployer les containers Kafka, Storm et Hadoop
 
 
