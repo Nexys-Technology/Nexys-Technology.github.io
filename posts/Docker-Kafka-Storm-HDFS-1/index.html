@@ -9,7 +9,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Docker, Kafka, Storm et Hadoop HDFS 1 - Nexys Technology</title>
+        <title>Docker, Kafka, Storm et Hadoop HDFS 1er partie - Nexys Technology</title>
         <meta name="author" content="Nexys Consulting">
         
         <meta name="description" content="Création d'un environnement Kafka, Storm & Hadoop avec Docker 1: Préparation de l'environnement">
@@ -78,7 +78,7 @@
                     <article class="article article--single">
     <header class="article__header">
     
-        <h1 class="article__title">Docker, Kafka, Storm et Hadoop HDFS 1</h1>
+        <h1 class="article__title">Docker, Kafka, Storm et Hadoop HDFS 1er partie</h1>
     
 
     
@@ -214,7 +214,7 @@ Utilisons le container standard pour déployer un système Graylog 2 complet:</p
 
 <p>Se connecter à l’interface GrayLog 2: <code>open http://$(docker-machine ip default):19000</code></p>
 
-<p>Aller dnas le menu  System/input et créer un input de type GELF UDP donner lui un nom (ex: Docker Log). Ensuite essayons un container avec la reidrection des lofs vers GrayLog:</p>
+<p>Aller dnas le menu  System/input et créer un input de type GELF UDP donner lui un nom (ex: Docker Log). Ensuite essayons un container avec la redirection des logs vers GrayLog:</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 </pre></td><td class="code"><pre><code class="bash"><span class="line">docker run --log-driver<span class="o">=</span>gelf --log-opt gelf-address<span class="o">=</span>udp://<span class="k">$(</span>docker-machine ip default<span class="k">)</span>:12201 busybox <span class="nb">echo </span>Hello Graylog
@@ -224,7 +224,7 @@ Utilisons le container standard pour déployer un système Graylog 2 complet:</p
 
 <p class="image-left"><img src="http://nexys-technology.github.io/images/messages.png" alt="GrayLog Message" /></p>
 
-<p>Voila pour cette première partie. Dans la suivante on verra comment déployer les containers Kafka, Storm et Hadoop</p>
+<p>Voila pour cette première partie. Dans la suivante nous verrons comment déployer les containers Kafka, Storm et Hadoop</p>
 
 
 
@@ -255,7 +255,11 @@ Utilisons le container standard pour déployer un système Graylog 2 complet:</p
     <ul class="divided">
         
         <li class="post">
-            <a href="/posts/Docker-Kafka-Storm-HDFS-1/">Docker, Kafka, Storm et Hadoop HDFS 1</a>
+            <a href="/posts/Docker-Kafka-Storm-HDFS-2/">Docker, Kafka, Storm et Hadoop HDFS 2éme partie</a>
+        </li>
+        
+        <li class="post">
+            <a href="/posts/Docker-Kafka-Storm-HDFS-1/">Docker, Kafka, Storm et Hadoop HDFS 1er partie</a>
         </li>
         
     </ul>
