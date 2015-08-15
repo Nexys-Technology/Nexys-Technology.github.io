@@ -196,59 +196,19 @@ complète.</p>
 <span class="line-number">52</span>
 <span class="line-number">53</span>
 <span class="line-number">54</span>
-<span class="line-number">55</span>
-<span class="line-number">56</span>
-<span class="line-number">57</span>
-<span class="line-number">58</span>
-<span class="line-number">59</span>
-<span class="line-number">60</span>
-<span class="line-number">61</span>
-<span class="line-number">62</span>
-<span class="line-number">63</span>
-<span class="line-number">64</span>
-<span class="line-number">65</span>
-<span class="line-number">66</span>
-<span class="line-number">67</span>
-<span class="line-number">68</span>
-<span class="line-number">69</span>
-<span class="line-number">70</span>
-<span class="line-number">71</span>
-<span class="line-number">72</span>
-<span class="line-number">73</span>
-<span class="line-number">74</span>
 </pre></td><td class="code"><pre><code class="yaml"><span class="line"><span class="l-Scalar-Plain">zookeeper</span><span class="p-Indicator">:</span>
 </span><span class="line">  <span class="l-Scalar-Plain">image</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">wurstmeister/zookeeper</span>
 </span><span class="line">  <span class="l-Scalar-Plain">ports</span><span class="p-Indicator">:</span>
 </span><span class="line">    <span class="p-Indicator">-</span> <span class="s">&quot;2181:2181&quot;</span>
 </span><span class="line">    <span class="p-Indicator">-</span> <span class="s">&quot;22222:22&quot;</span>
 </span><span class="line"><span class="l-Scalar-Plain">hadoop</span><span class="p-Indicator">:</span>
-</span><span class="line">  <span class="l-Scalar-Plain">build</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">./hadoop-docker</span>
-</span><span class="line">  <span class="c1">#image: sequenceiq/hadoop-docker:2.7.0</span>
+</span><span class="line">  <span class="l-Scalar-Plain">image</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">sequenceiq/hadoop-docker:2.7.0</span>
 </span><span class="line">  <span class="l-Scalar-Plain">expose</span><span class="p-Indicator">:</span>
 </span><span class="line">    <span class="p-Indicator">-</span> <span class="s">&quot;9000&quot;</span>
 </span><span class="line">    <span class="p-Indicator">-</span> <span class="s">&quot;50010&quot;</span>
 </span><span class="line">  <span class="l-Scalar-Plain">ports</span><span class="p-Indicator">:</span>
-</span><span class="line">    <span class="c1"># HDFS Ports</span>
-</span><span class="line"><span class="c1">#    - &quot;9000:9000&quot;</span>
-</span><span class="line"><span class="c1">#    - &quot;50010:50010&quot;</span>
-</span><span class="line"><span class="c1">#    - &quot;50020:50020&quot;</span>
-</span><span class="line"><span class="c1">#    - &quot;50070:50070&quot;</span>
-</span><span class="line"><span class="c1">#    - &quot;50075:50075&quot;</span>
-</span><span class="line"><span class="c1">#    - &quot;50090:50090&quot;</span>
-</span><span class="line">    <span class="c1"># MapRed ports</span>
-</span><span class="line"><span class="c1">#    - &quot;19888&quot;</span>
-</span><span class="line">    <span class="c1"># Yarn Ports</span>
-</span><span class="line"><span class="c1">#    - &quot;8030&quot;</span>
-</span><span class="line"><span class="c1">#    - &quot;8031&quot;</span>
-</span><span class="line"><span class="c1">#    - &quot;8032&quot;</span>
-</span><span class="line"><span class="c1">#    - &quot;8033&quot;</span>
-</span><span class="line"><span class="c1">#    - &quot;8040&quot;</span>
-</span><span class="line"><span class="c1">#    - &quot;8042&quot;</span>
-</span><span class="line"><span class="c1">#    - &quot;8088&quot;</span>
 </span><span class="line">    <span class="c1"># Ssh</span>
 </span><span class="line">    <span class="p-Indicator">-</span> <span class="s">&quot;22227:2122&quot;</span>
-</span><span class="line">    <span class="c1"># Other</span>
-</span><span class="line"><span class="c1">#    - &quot;49707&quot;</span>
 </span><span class="line"><span class="l-Scalar-Plain">kafka</span><span class="p-Indicator">:</span>
 </span><span class="line">  <span class="l-Scalar-Plain">image</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">wurstmeister/kafka:0.8.2.0</span>
 </span><span class="line">  <span class="l-Scalar-Plain">ports</span><span class="p-Indicator">:</span>

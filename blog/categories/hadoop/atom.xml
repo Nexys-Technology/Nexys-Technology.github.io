@@ -4,7 +4,7 @@
     <title><![CDATA[Category: hadoop | Nexys Technology]]></title>
     <link href="http://nexys-technology.github.io/blog/categories/hadoop/atom.xml" rel="self"/>
     <link href="http://nexys-technology.github.io/"/>
-    <updated>2015-08-15T10:04:44+02:00</updated>
+    <updated>2015-08-15T10:06:15+02:00</updated>
     <id>http://nexys-technology.github.io/</id>
     <author>
         <name><![CDATA[Nexys Consulting]]></name>
@@ -39,33 +39,13 @@ zookeeper:
     - "2181:2181"
     - "22222:22"
 hadoop:
-  build: ./hadoop-docker
-  #image: sequenceiq/hadoop-docker:2.7.0
+  image: sequenceiq/hadoop-docker:2.7.0
   expose:
     - "9000"
     - "50010"
   ports:
-    # HDFS Ports
-#    - "9000:9000"
-#    - "50010:50010"
-#    - "50020:50020"
-#    - "50070:50070"
-#    - "50075:50075"
-#    - "50090:50090"
-    # MapRed ports
-#    - "19888"
-    # Yarn Ports
-#    - "8030"
-#    - "8031"
-#    - "8032"
-#    - "8033"
-#    - "8040"
-#    - "8042"
-#    - "8088"
     # Ssh
     - "22227:2122"
-    # Other
-#    - "49707"
 kafka:
   image: wurstmeister/kafka:0.8.2.0
   ports:
