@@ -4,7 +4,7 @@
     <title><![CDATA[Category: storm | Nexys Technology]]></title>
     <link href="http://nexys-technology.github.io/blog/categories/storm/atom.xml" rel="self"/>
     <link href="http://nexys-technology.github.io/"/>
-    <updated>2015-08-14T19:13:38+02:00</updated>
+    <updated>2015-08-15T10:04:44+02:00</updated>
     <id>http://nexys-technology.github.io/</id>
     <author>
         <name><![CDATA[Nexys Consulting]]></name>
@@ -18,22 +18,24 @@
         <link href="http://nexys-technology.github.io/posts/Docker-Kafka-Storm-HDFS-2/"/>
         <updated>2015-08-13T00:00:00+02:00</updated>
         <id>http://nexys-technology.github.io/posts/Docker-Kafka-Storm-HDFS-2</id>
-        <content type="html"><![CDATA[<p>Dans cette partie nous allons déployer les containers dockers pour Kafka, Storm 
+        <content type="html"><![CDATA[<p>Dans cette partie nous allons déployer les containers dockers pour Kafka, Storm
 et Hadoop avec l’aide de docker-compose.</p>
 
 <!--more-->
 
 <h2 id="docker-compose">Docker Compose</h2>
 
-<p>Nous allons décrire l’ensemble des services sous la forme d’une appliaction docker compose.
-C’est la configuration de plusieurs container Docker décrit dans un fichier docker-compose.yml.</p>
+<p>Nous allons décrire l’ensemble des services sous la forme d’une application docker compose.
+Docker Compose permet de décrire une liste de container Dokcer et leur interdépendance.
+Cette configuration est décrite dans un fichier docker-compose.yml qui compose l’application
+complète.</p>
 
-<p>Voila le fichier docker-compose.yml:</p>
+<p>Voila le fichier docker-compose.yml de notre application Kafka, Storm &amp; Hadoop:</p>
 
 <p><code> yml docker-compose.yml
 zookeeper:
   image: wurstmeister/zookeeper
-  ports: 
+  ports:
     - "2181:2181"
     - "22222:22"
 hadoop:
@@ -82,7 +84,7 @@ nimbus:
     - "49772:3772"
     - "49627:6627"
     - "22224:22"
-  links: 
+  links:
     - zookeeper:zk
     - kafka:kf
     - hadoop:hp
@@ -92,7 +94,7 @@ supervisor:
     - "8000"
     - "22225:22"
     - "6703:6703"
-  links: 
+  links:
     - nimbus:nimbus
     - zookeeper:zk
     - kafka:kf
@@ -102,22 +104,33 @@ ui:
   ports:
     - "49080:8080"
     - "22226:22"
-  links: 
+  links:
     - nimbus:nimbus
     - zookeeper:zk
 </code></p>
 
-<p>Récuperer le repository git:</p>
+<p>Récuperer le repository git docker-kafka-storm-hdfs contenant le fichier docker-compose.yml et les fichiers DockerFile:</p>
 
 <p><code>bash
 $ git clone https://github.com/Nexys-Technology/docker-kafka-storm-hdfs.git
 $ cd docker-kafka-storm-hdfs
 </code></p>
 
-<p>Démarrer les containers avec docker-compose. Lors du premier lancement docker va récupérer les images par téléchargement donc c’est le bon moment pour une pause ;):</p>
+<p>Avant de démarrer les containers il faut modifier la ligne 42 du fichier docker-compose.yml par l’adresse ip
+de la vm docker.</p>
 
-<p><code>
-~/docker-kafka-storm-hdfs $ docker-compose
+<p>Pour avoir l’adresse IP de la VM docker par défaut utiliser la commande suivante:</p>
+
+<p><code>bash
+~/docker-kafka-storm-hdfs $ docker-machine ip default
+192.168.99.100
+~/docker-kafka-storm-hdfs $
+</code></p>
+
+<p>Démarrer les containers avec docker-compose. Lors du premier lancement docker va récupérer toutes images par téléchargement donc c’est le bon moment pour une pause ;):</p>
+
+<p><code>bash
+~/docker-kafka-storm-hdfs $ docker-compose up
 Creating ksh_zookeeper_1...
 Creating ksh_hadoop_1...
 Creating ksh_kafka_1...
@@ -125,25 +138,9 @@ Creating ksh_nimbus_1...
 Creating ksh_ui_1...
 Creating ksh_supervisor_1...
 Attaching to ksh_zookeeper_1, ksh_hadoop_1, ksh_kafka_1, ksh_nimbus_1, ksh_ui_1, ksh_supervisor_1
-zookeeper_1  | JMX enabled by default
-zookeeper_1  | Using config: /opt/zookeeper-3.4.6/bin/../conf/zoo.cfg
-zookeeper_1  | 2015-08-14 15:34:53,120 [myid:] - INFO  [main:QuorumPeerConfig@103] - Reading configuration from: /opt/zookeeper-3.4.6/bin/../conf/zoo.cfg
-zookeeper_1  | 2015-08-14 15:34:53,137 [myid:] - INFO  [main:DatadirCleanupManager@78] - autopurge.snapRetainCount set to 3
-zookeeper_1  | 2015-08-14 15:34:53,142 [myid:] - INFO  [main:DatadirCleanupManager@79] - autopurge.purgeInterval set to 1
-zookeeper_1  | 2015-08-14 15:34:53,149 [myid:] - WARN  [main:QuorumPeerMain@113] - Either no config or no quorum defined in config, running  in standalone mode
-zookeeper_1  | 2015-08-14 15:34:53,170 [myid:] - INFO  [PurgeTask:DatadirCleanupManager$PurgeTask@138] - Purge task started.
-zookeeper_1  | 2015-08-14 15:34:53,203 [myid:] - INFO  [main:QuorumPeerConfig@103] - Reading configuration from: /opt/zookeeper-3.4.6/bin/../conf/zoo.cfg
-hadoop_1     | /
-hadoop_1     | Starting sshd: [  OK  ]
-zookeeper_1  | 2015-08-14 15:34:53,422 [myid:] - INFO  [PurgeTask:DatadirCleanupManager$PurgeTask@144] - Purge task completed.
-zookeeper_1  | 2015-08-14 15:34:53,438 [myid:] - INFO  [main:ZooKeeperServerMain@95] - Starting server
-ui_1         | /usr/lib/python2.7/dist-packages/supervisor/options.py:295: UserWarning: Supervisord is running as root and it is searching for its configuration file in default locations (including its current working directory); you probably want to specify a "-c" argument specifying an absolute path to a configuration file for improved security.
-ui_1         |   'Supervisord is running as root and it is searching '
-nimbus_1     | /usr/lib/python2.7/dist-packages/supervisor/options.py:295: UserWarning: Supervisord is running as root and it is searching for its configuration file in default locations (including its current working directory); you probably want to specify a "-c" argument specifying an absolute path to a configuration file for improved security.
-ui_1         | 2015-08-14 15:34:53,324 CRIT Supervisor running as root (no user in config file)
-nimbus_1     |   'Supervisord is running as root and it is searching '
-ui_1         | 2015-08-14 15:34:53,325 WARN Included extra file "/etc/supervisor/conf.d/storm-ui.conf" during parsing
 </code></p>
+
+<p class="image-left"><img src="http://nexys-technology.github.io/images/2015-08-13-Docker-Kafka-Storm-HDFS-2/DockerCompose-up.gif" alt="DockerComposeUp" /></p>
 
 <p>Si docker-compose à réussi à démarrer les containers on peux vérifier qu’ils sont bien lancés par la commande suivante:</p>
 
@@ -187,7 +184,7 @@ root@09c715741c84:/#
 <p><code>
 ~/docker-kafka-storm-hdfs $ scp -P 22224 TruckEvents/Tutorials-master/target/Tutorial-1.0-SNAPSHOT.jar root@$(docker-machine ip default):/tmp
 Tutorial-1.0-SNAPSHOT.jar                                                                                                                                      100%  102MB 101.7MB/s   00:01
-~/docker-kafka-storm-hdfs $ 
+~/docker-kafka-storm-hdfs $
 </code></p>
 
 <p>Entrer dans un shell du container Storm Numbus</p>

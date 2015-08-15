@@ -128,17 +128,19 @@
 
 
 
-    <p>Dans cette partie nous allons déployer les containers dockers pour Kafka, Storm 
+    <p>Dans cette partie nous allons déployer les containers dockers pour Kafka, Storm
 et Hadoop avec l’aide de docker-compose.</p>
 
 <!--more-->
 
 <h2 id="docker-compose">Docker Compose</h2>
 
-<p>Nous allons décrire l’ensemble des services sous la forme d’une appliaction docker compose.
-C’est la configuration de plusieurs container Docker décrit dans un fichier docker-compose.yml.</p>
+<p>Nous allons décrire l’ensemble des services sous la forme d’une application docker compose.
+Docker Compose permet de décrire une liste de container Dokcer et leur interdépendance.
+Cette configuration est décrite dans un fichier docker-compose.yml qui compose l’application
+complète.</p>
 
-<p>Voila le fichier docker-compose.yml:</p>
+<p>Voila le fichier docker-compose.yml de notre application Kafka, Storm &amp; Hadoop:</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>docker-compose.yml</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -290,7 +292,7 @@ C’est la configuration de plusieurs container Docker décrit dans un fichier d
 </span><span class="line">    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">zookeeper:zk</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>Récuperer le repository git:</p>
+<p>Récuperer le repository git docker-kafka-storm-hdfs contenant le fichier docker-compose.yml et les fichiers DockerFile:</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -298,7 +300,20 @@ C’est la configuration de plusieurs container Docker décrit dans un fichier d
 </span><span class="line"><span class="nv">$ </span><span class="nb">cd </span>docker-kafka-storm-hdfs
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>Démarrer les containers avec docker-compose. Lors du premier lancement docker va récupérer les images par téléchargement donc c’est le bon moment pour une pause ;):</p>
+<p>Avant de démarrer les containers il faut modifier la ligne 42 du fichier docker-compose.yml par l’adresse ip
+de la vm docker.</p>
+
+<p>Pour avoir l’adresse IP de la VM docker par défaut utiliser la commande suivante:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">~/docker-kafka-storm-hdfs <span class="nv">$ </span>docker-machine ip default
+</span><span class="line">192.168.99.100
+</span><span class="line">~/docker-kafka-storm-hdfs <span class="err">$</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Démarrer les containers avec docker-compose. Lors du premier lancement docker va récupérer toutes images par téléchargement donc c’est le bon moment pour une pause ;):</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -308,25 +323,7 @@ C’est la configuration de plusieurs container Docker décrit dans un fichier d
 <span class="line-number">6</span>
 <span class="line-number">7</span>
 <span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-</pre></td><td class="code"><pre><code class="bash"><span class="line">~/docker-kafka-storm-hdfs <span class="nv">$ </span>docker-compose
+</pre></td><td class="code"><pre><code class="bash"><span class="line">~/docker-kafka-storm-hdfs <span class="nv">$ </span>docker-compose up
 </span><span class="line">Creating ksh_zookeeper_1...
 </span><span class="line">Creating ksh_hadoop_1...
 </span><span class="line">Creating ksh_kafka_1...
@@ -334,25 +331,9 @@ C’est la configuration de plusieurs container Docker décrit dans un fichier d
 </span><span class="line">Creating ksh_ui_1...
 </span><span class="line">Creating ksh_supervisor_1...
 </span><span class="line">Attaching to ksh_zookeeper_1, ksh_hadoop_1, ksh_kafka_1, ksh_nimbus_1, ksh_ui_1, ksh_supervisor_1
-</span><span class="line">zookeeper_1  <span class="p">|</span> JMX enabled by default
-</span><span class="line">zookeeper_1  <span class="p">|</span> Using config: /opt/zookeeper-3.4.6/bin/../conf/zoo.cfg
-</span><span class="line">zookeeper_1  <span class="p">|</span> 2015-08-14 15:34:53,120 <span class="o">[</span>myid:<span class="o">]</span> - INFO  <span class="o">[</span>main:QuorumPeerConfig@103<span class="o">]</span> - Reading configuration from: /opt/zookeeper-3.4.6/bin/../conf/zoo.cfg
-</span><span class="line">zookeeper_1  <span class="p">|</span> 2015-08-14 15:34:53,137 <span class="o">[</span>myid:<span class="o">]</span> - INFO  <span class="o">[</span>main:DatadirCleanupManager@78<span class="o">]</span> - autopurge.snapRetainCount <span class="nb">set </span>to 3
-</span><span class="line">zookeeper_1  <span class="p">|</span> 2015-08-14 15:34:53,142 <span class="o">[</span>myid:<span class="o">]</span> - INFO  <span class="o">[</span>main:DatadirCleanupManager@79<span class="o">]</span> - autopurge.purgeInterval <span class="nb">set </span>to 1
-</span><span class="line">zookeeper_1  <span class="p">|</span> 2015-08-14 15:34:53,149 <span class="o">[</span>myid:<span class="o">]</span> - WARN  <span class="o">[</span>main:QuorumPeerMain@113<span class="o">]</span> - Either no config or no quorum defined in config, running  in standalone mode
-</span><span class="line">zookeeper_1  <span class="p">|</span> 2015-08-14 15:34:53,170 <span class="o">[</span>myid:<span class="o">]</span> - INFO  <span class="o">[</span>PurgeTask:DatadirCleanupManager<span class="nv">$PurgeTask</span>@138<span class="o">]</span> - Purge task started.
-</span><span class="line">zookeeper_1  <span class="p">|</span> 2015-08-14 15:34:53,203 <span class="o">[</span>myid:<span class="o">]</span> - INFO  <span class="o">[</span>main:QuorumPeerConfig@103<span class="o">]</span> - Reading configuration from: /opt/zookeeper-3.4.6/bin/../conf/zoo.cfg
-</span><span class="line">hadoop_1     <span class="p">|</span> /
-</span><span class="line">hadoop_1     <span class="p">|</span> Starting sshd: <span class="o">[</span>  OK  <span class="o">]</span>
-</span><span class="line">zookeeper_1  <span class="p">|</span> 2015-08-14 15:34:53,422 <span class="o">[</span>myid:<span class="o">]</span> - INFO  <span class="o">[</span>PurgeTask:DatadirCleanupManager<span class="nv">$PurgeTask</span>@144<span class="o">]</span> - Purge task completed.
-</span><span class="line">zookeeper_1  <span class="p">|</span> 2015-08-14 15:34:53,438 <span class="o">[</span>myid:<span class="o">]</span> - INFO  <span class="o">[</span>main:ZooKeeperServerMain@95<span class="o">]</span> - Starting server
-</span><span class="line">ui_1         <span class="p">|</span> /usr/lib/python2.7/dist-packages/supervisor/options.py:295: UserWarning: Supervisord is running as root and it is searching <span class="k">for</span> its configuration file in default locations <span class="o">(</span>including its current working directory<span class="o">)</span><span class="p">;</span> you probably want to specify a <span class="s2">&quot;-c&quot;</span> argument specifying an absolute path to a configuration file <span class="k">for</span> improved security.
-</span><span class="line">ui_1         <span class="p">|</span>   <span class="s1">&#39;Supervisord is running as root and it is searching &#39;</span>
-</span><span class="line">nimbus_1     <span class="p">|</span> /usr/lib/python2.7/dist-packages/supervisor/options.py:295: UserWarning: Supervisord is running as root and it is searching <span class="k">for</span> its configuration file in default locations <span class="o">(</span>including its current working directory<span class="o">)</span><span class="p">;</span> you probably want to specify a <span class="s2">&quot;-c&quot;</span> argument specifying an absolute path to a configuration file <span class="k">for</span> improved security.
-</span><span class="line">ui_1         <span class="p">|</span> 2015-08-14 15:34:53,324 CRIT Supervisor running as root <span class="o">(</span>no user in config file<span class="o">)</span>
-</span><span class="line">nimbus_1     <span class="p">|</span>   <span class="s1">&#39;Supervisord is running as root and it is searching &#39;</span>
-</span><span class="line">ui_1         <span class="p">|</span> 2015-08-14 15:34:53,325 WARN Included extra file <span class="s2">&quot;/etc/supervisor/conf.d/storm-ui.conf&quot;</span> during parsing
 </span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p class="image-left"><img src="http://nexys-technology.github.io/images/2015-08-13-Docker-Kafka-Storm-HDFS-2/DockerCompose-up.gif" alt="DockerComposeUp" /></p>
 
 <p>Si docker-compose à réussi à démarrer les containers on peux vérifier qu’ils sont bien lancés par la commande suivante:</p>
 
@@ -423,7 +404,7 @@ C’est la configuration de plusieurs container Docker décrit dans un fichier d
 <span class="line-number">3</span>
 </pre></td><td class="code"><pre><code class="bash"><span class="line">~/docker-kafka-storm-hdfs <span class="nv">$ </span>scp -P <span class="m">22224</span> TruckEvents/Tutorials-master/target/Tutorial-1.0-SNAPSHOT.jar root@<span class="k">$(</span>docker-machine ip default<span class="k">)</span>:/tmp
 </span><span class="line">Tutorial-1.0-SNAPSHOT.jar                                                                                                                                      100%  102MB 101.7MB/s   00:01
-</span><span class="line">~/docker-kafka-storm-hdfs <span class="nv">$ </span>
+</span><span class="line">~/docker-kafka-storm-hdfs <span class="err">$</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>Entrer dans un shell du container Storm Numbus</p>
